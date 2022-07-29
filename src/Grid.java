@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Grid{
+public class Grid {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -10,7 +10,7 @@ public class Grid{
         System.out.println("2. Sorcerer");
         System.out.println("3. Paladin");
 
-        while(true) {
+        while (true) {
             int choice = scan.nextInt();
             if (choice == 1) {
                 System.out.println("You Chose a Warrior! What's his name?");

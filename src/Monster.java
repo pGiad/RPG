@@ -8,26 +8,30 @@ public class Monster extends Living {
         Spirit
     }
 
-    public Monster(String name, MonsterKind kind) {       // Constructor
+    MonsterKind monsterKind;
+
+    // Constructor
+    public Monster(String name, MonsterKind kind) {
         super(name, 5, 1000);
-        if (kind == MonsterKind.Dragon) {
+        if (kind == MonsterKind.Dragon) {       // Dragons have better damage range
             defense = 300;
             damageMin = 200;
             damageMax = 300;
             dodgeChance = 0.2;
-        } else if (kind == MonsterKind.Exoskeleton) {
+            monsterKind = kind;
+        } else if (monsterKind == MonsterKind.Exoskeleton) {        // Exoskeletons have raised defense
             defense = 500;
             damageMin = 100;
             damageMax = 250;
             dodgeChance = 0.2;
-        } else if (kind == MonsterKind.Spirit) {
+        } else if (monsterKind == MonsterKind.Spirit) {        // Spirits have raised dodge chance
             defense = 300;
             damageMin = 100;
             damageMax = 250;
             dodgeChance = 0.4;
         }
-
-        System.out.println("Constructed a Monster of MonsterKind: " + kind + ", named: " + name);       // Print message
+        // Print message
+        System.out.println("Constructed a Monster of MonsterKind: " + monsterKind + ", named: " + name);
         System.out.println("Defense: " + defense);
         System.out.println("damageMin: " + damageMin);
         System.out.println("damageMax: " + damageMax);

@@ -1,11 +1,13 @@
 public abstract class Living {
     public String name;
-    public int level, healthPower;
+    public int level, healthPower, currentHP;
 
-    public Living(String nm, int lev, int hP) {         // Constructor
+    // Constructor
+    public Living(String nm, int lev, int hP) {
         name = nm;
         level = lev;
         healthPower = hP;
-        System.out.println("Constructed a Living");     // Print message
+        currentHP = hP;
+        System.out.println("Constructed a Living named: " + name);     // Print message
     }
 }

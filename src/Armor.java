@@ -1,6 +1,7 @@
 public class Armor extends Item {
     public int defense;
 
+    // Constructor
     public Armor(String name, int minLevel, int def) {
         super(name, minLevel * 50, minLevel);
         defense = def;
