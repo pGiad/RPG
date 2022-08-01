@@ -1,4 +1,4 @@
-package main.java.gr.pangiad.rpg.enumeration;
+package main.java.gr.pgiad.rpg.enumeration;
 
 public enum MonsterKind {
     DRAGON,

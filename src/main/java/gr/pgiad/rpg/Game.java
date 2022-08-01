@@ -1,18 +1,18 @@
-package main.java.gr.pangiad.rpg;
+package main.java.gr.pgiad.rpg;
+
+import main.java.gr.pgiad.rpg.enumeration.HeroKind;
+import main.java.gr.pgiad.rpg.living.Hero;
 
 import java.util.Scanner;
 
-public class Grid {
-    public static String name;
-    public String postName() { return name; }
-    public static Hero.HeroKind heroKind;
-    public Hero.HeroKind postHeroKind() { return heroKind; }
-    public static Hero myHero;
-    public Hero postHero() { return myHero; }
+public class Game {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        String name;
+        HeroKind heroKind;
+        Hero myHero;
 
-        System.out.println("Choose a main.java.gr.pangiad.rpg.Hero: ");
+        System.out.println("Choose a Hero: ");
         System.out.println("1. Warrior");
         System.out.println("2. Sorcerer");
         System.out.println("3. Paladin");
@@ -23,21 +23,21 @@ public class Grid {
                 System.out.println("You Chose a Warrior! What's his name?");
                 scan.nextLine();
                 name = scan.nextLine();
-                heroKind = Hero.HeroKind.Warrior;
+                heroKind = HeroKind.WARRIOR;
                 myHero = new Hero(name, heroKind);
                 break;
             } else if (choice == 2) {
                 System.out.println("You chose a Sorcerer! What's his name?");
                 scan.nextLine();
                 name = scan.nextLine();
-                heroKind = Hero.HeroKind.Sorcerer;
+                heroKind = HeroKind.SORCERER;
                 myHero = new Hero(name, heroKind);
                 break;
             } else if (choice == 3) {
                 System.out.println("You chose a Paladin! What's his name?");
                 scan.nextLine();
                 name = scan.nextLine();
-                heroKind = Hero.HeroKind.Paladin;
+                heroKind = HeroKind.PALADIN;
                 myHero = new Hero(name, heroKind);
                 break;
             } else {

@@ -1,7 +1,6 @@
-package main.java.gr.pangiad.rpg;
+package main.java.gr.pgiad.rpg.living;
 
 public abstract class Living {
-
     private String name;
     private int level;
     private int healthPower;
@@ -13,7 +12,7 @@ public abstract class Living {
         this.level = level;
         this.healthPower = healthPower;
         this.currentHP = healthPower;
-        System.out.println("Constructed a main.java.gr.pangiad.rpg.Living named: " + name);     // Print message
+        System.out.println("Constructed a Living named: " + name);     // Print message
     }
 
     public String getName() {
