@@ -1,7 +1,12 @@
 import java.util.Scanner;
 
 public class Grid {
-
+    public static String name;
+    public String postName() { return name; }
+    public static Hero.HeroKind heroKind;
+    public Hero.HeroKind postHeroKind() { return heroKind; }
+    public static Hero myHero;
+    public Hero postHero() { return myHero; }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
@@ -15,21 +20,30 @@ public class Grid {
             if (choice == 1) {
                 System.out.println("You Chose a Warrior! What's his name?");
                 scan.nextLine();
-                new Hero(scan.nextLine(), Hero.HeroKind.Warrior);
+                name = scan.nextLine();
+                heroKind = Hero.HeroKind.Warrior;
+                myHero = new Hero(name, heroKind);
                 break;
             } else if (choice == 2) {
                 System.out.println("You chose a Sorcerer! What's his name?");
                 scan.nextLine();
-                new Hero(scan.nextLine(), Hero.HeroKind.Sorcerer);
+                name = scan.nextLine();
+                heroKind = Hero.HeroKind.Sorcerer;
+                myHero = new Hero(name, heroKind);
                 break;
             } else if (choice == 3) {
                 System.out.println("You chose a Paladin! What's his name?");
                 scan.nextLine();
-                new Hero(scan.nextLine(), Hero.HeroKind.Paladin);
+                name = scan.nextLine();
+                heroKind = Hero.HeroKind.Paladin;
+                myHero = new Hero(name, heroKind);
                 break;
             } else {
                 System.out.println("Choose again...");
             }
         }
+
+        Battle battle = new Battle();
+        battle.main(myHero);
     }
 }

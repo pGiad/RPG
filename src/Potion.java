@@ -3,10 +3,9 @@ public class Potion extends Item {
 
     // A potion can raise Hero's HP, Attack/Damage, Defense or Magic Power
     enum PotionKind {
-        Hp,
-        Attack,
-        Defense,
-        MagicPower
+        Strength,
+        Dexterity,
+        Agility
     }
 
     PotionKind potionKind;

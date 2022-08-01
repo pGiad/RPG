@@ -1,6 +1,7 @@
 public class Hero extends Living {
     // Defense is the amount of power that we reduce from the opponent's attack
-    public int money, experience, defense, armorDefense, weaponDamage, magicPower, currentMP, strength, dexterity, agility;
+    public int money, experience, defense, roundAttack, armorDefense, weaponDamage, magicPower, currentMP, strength,
+            dexterity, agility;
 
     enum HeroKind {
         Warrior,
@@ -16,6 +17,7 @@ public class Hero extends Living {
         money = 200;
         experience = 0;
         defense = 0;
+        roundAttack = 0;
         armorDefense = 0;
         weaponDamage = 0;
         magicPower = 500;
@@ -79,25 +81,32 @@ public class Hero extends Living {
     public void usePotion(Potion potion) {
         Potion.PotionKind potionKind = potion.potionKind;
         switch (potionKind) {
-            case Hp:
-                this.currentHP += potion.gain;
-            case Attack:
+            case Strength:
                 this.strength += potion.gain;
-            case Defense:
-                this.defense += potion.gain;
-            case MagicPower:
-                this.currentMP += potion.gain;
+            case Dexterity:
+                this.dexterity += potion.gain;
+            case Agility:
+                this.agility += potion.gain;
         }
+    }
+
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
     }
 
     // Function to Trigger what should be done when a spell is used. This function should not be under this class...
     public void castSpell(Spell spell) {
-        // Do the basics for all the spells....
+        if(this.magicPower < spell.magicPower) {
+            // Don't let Hero cast the Spell
+        }
+        // Do the basics for all the spells
+        this.magicPower -= spell.magicPower;
+     //   roundAttack = getRandomNumber(spellMinAttack, spellMaxAttack);
         Spell.SpellKind spellKind = spell.spellKind;
         switch (spellKind) {
-            case IceSpell:      // do something
-            case FireSpell:     // ....
-            case LightingSpell: // ....
+            case IceSpell:      // reduces damage range of the opponent
+            case FireSpell:     // reduces defense of the opponent
+            case LightingSpell: // reduces the chance of the opponent to dodge an attack
         }
     }
 

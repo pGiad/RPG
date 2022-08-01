@@ -1,9 +1,7 @@
-import java.util.HashMap;
-
 /* All kinds of spells damage the enemy (damage range based on the dexterity of the Hero) but each kind has some
  * special powers
  */
-public abstract class Spell {
+public class Spell {
     public String name;
     public int price, minLevel, damageMin, damageMax, magicPower;
     double specialValuePercent;
