@@ -1,7 +1,11 @@
+package main.java.gr.pangiad.rpg;
+
+import main.java.gr.pangiad.rpg.item.Item;
+
 public class Potion extends Item {
     public int gain;
 
-    // A potion can raise Hero's HP, Attack/Damage, Defense or Magic Power
+    // A potion can raise main.java.gr.pangiad.rpg.Hero's HP, Attack/Damage, Defense or Magic Power
     enum PotionKind {
         Strength,
         Dexterity,

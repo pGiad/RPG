@@ -1,4 +1,6 @@
-/* All kinds of spells damage the enemy (damage range based on the dexterity of the Hero) but each kind has some
+package main.java.gr.pangiad.rpg;
+
+/* All kinds of spells damage the enemy (damage range based on the dexterity of the main.java.gr.pangiad.rpg.Hero) but each kind has some
  * special powers
  */
 public class Spell {

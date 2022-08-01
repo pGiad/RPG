@@ -1,3 +1,7 @@
+package main.java.gr.pangiad.rpg;
+
+import main.java.gr.pangiad.rpg.item.Armor;
+
 public class Hero extends Living {
     // Defense is the amount of power that we reduce from the opponent's attack
     public int money, experience, defense, roundAttack, armorDefense, weaponDamage, magicPower, currentMP, strength,
@@ -37,7 +41,7 @@ public class Hero extends Living {
             agility = 500;
         }
 
-        System.out.println("Constructed a Hero of kind: " + heroKind + ", named: " + name);       // Print message
+        System.out.println("Constructed a main.java.gr.pangiad.rpg.Hero of kind: " + heroKind + ", named: " + name);       // Print message
         System.out.println("Money: " + money);
         System.out.println("XP: " + experience);
         System.out.println("Defense: " + defense);
@@ -47,10 +51,10 @@ public class Hero extends Living {
         System.out.println("Agility: " + agility);
     }
 
-    // Function that changes the stats of the Hero when he has enough xp to level up
+    // Function that changes the stats of the main.java.gr.pangiad.rpg.Hero when he has enough xp to level up
     public void levelUp() {
-        this.level++;
-        this.healthPower *= 2;
+        this.setLevel(this.getLevel() + 1);
+        this.setHealthPower(this.getHealthPower() * 2);
         this.magicPower *= 2;
         if (this.heroKind == HeroKind.Warrior) {
             this.strength += 300;
@@ -67,17 +71,17 @@ public class Hero extends Living {
         }
     }
 
-    // Function to give Hero extra defense if armor is equipped
+    // Function to give main.java.gr.pangiad.rpg.Hero extra defense if armor is equipped
     public void equipArmor(Armor armor) {
         armorDefense = armor.defense;
     }
 
-    // Function to give Hero extra attack/strength if weapon is equipped
+    // Function to give main.java.gr.pangiad.rpg.Hero extra attack/strength if weapon is equipped
     public void equipWeapon(Weapon weapon) {
         weaponDamage = weapon.attack;
     }
 
-    // Function to raise the value of a stat based on the potion kind that the Hero used
+    // Function to raise the value of a stat based on the potion kind that the main.java.gr.pangiad.rpg.Hero used
     public void usePotion(Potion potion) {
         Potion.PotionKind potionKind = potion.potionKind;
         switch (potionKind) {
@@ -88,6 +92,7 @@ public class Hero extends Living {
             case Agility:
                 this.agility += potion.gain;
         }
+
     }
 
     public int getRandomNumber(int min, int max) {
@@ -96,12 +101,12 @@ public class Hero extends Living {
 
     // Function to Trigger what should be done when a spell is used. This function should not be under this class...
     public void castSpell(Spell spell) {
-        if(this.magicPower < spell.magicPower) {
-            // Don't let Hero cast the Spell
+        if (this.magicPower < spell.magicPower) {
+            // Don't let main.java.gr.pangiad.rpg.Hero cast the main.java.gr.pangiad.rpg.Spell
         }
         // Do the basics for all the spells
         this.magicPower -= spell.magicPower;
-     //   roundAttack = getRandomNumber(spellMinAttack, spellMaxAttack);
+        //   roundAttack = getRandomNumber(spellMinAttack, spellMaxAttack);
         Spell.SpellKind spellKind = spell.spellKind;
         switch (spellKind) {
             case IceSpell:      // reduces damage range of the opponent

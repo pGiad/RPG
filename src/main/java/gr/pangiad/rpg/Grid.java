@@ -1,3 +1,5 @@
+package main.java.gr.pangiad.rpg;
+
 import java.util.Scanner;
 
 public class Grid {
@@ -10,7 +12,7 @@ public class Grid {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Choose a Hero: ");
+        System.out.println("Choose a main.java.gr.pangiad.rpg.Hero: ");
         System.out.println("1. Warrior");
         System.out.println("2. Sorcerer");
         System.out.println("3. Paladin");

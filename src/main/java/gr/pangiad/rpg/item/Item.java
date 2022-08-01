@@ -1,3 +1,5 @@
+package main.java.gr.pangiad.rpg.item;
+
 public abstract class Item {
     public String name;
     public int price, minLevel;

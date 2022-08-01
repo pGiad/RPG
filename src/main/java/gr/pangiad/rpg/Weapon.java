@@ -1,3 +1,7 @@
+package main.java.gr.pangiad.rpg;
+
+import main.java.gr.pangiad.rpg.item.Item;
+
 public class Weapon extends Item {
     public int attack;
     public boolean twoHandsNeeded;
@@ -7,7 +11,7 @@ public class Weapon extends Item {
         attack = att;
         twoHandsNeeded = twoHands;
 
-        System.out.println("Constructed a Weapon named: " + name);       // Print message
+        System.out.println("Constructed a main.java.gr.pangiad.rpg.Weapon named: " + name);       // Print message
         System.out.println("Price: " + price);
         System.out.println("Minimum Level: " + minLevel);
         System.out.println("Damage: " + att);
