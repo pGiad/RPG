@@ -25,12 +25,15 @@ public class Hero extends Living {
     private int agility;
     private HeroKind heroKind;
     private ArrayList<Weapon> weapons;
+    private Weapon myWeapon;
     private ArrayList<Armor> armors;
+    private Armor myArmor;
     private ArrayList<Potion> potions;
+    private ArrayList<Spell> spells;
 
     // Constructor
     public Hero(String name, HeroKind heroKind) {
-        super(name, 0, 1000);
+        super(name, 1, 1000);
         this.heroKind = heroKind;
         this.money = 200;
         this.experience = 0;
@@ -165,6 +168,14 @@ public class Hero extends Living {
         this.weapons = weapons;
     }
 
+    public Weapon getMyWeapon() {
+        return myWeapon;
+    }
+
+    public void setMyWeapon(Weapon myWeapon) {
+        this.myWeapon = myWeapon;
+    }
+
     public ArrayList<Armor> getArmors() {
         return armors;
     }
@@ -173,12 +184,28 @@ public class Hero extends Living {
         this.armors = armors;
     }
 
+    public Armor getMyArmor() {
+        return myArmor;
+    }
+
+    public void setMyArmor(Armor myArmor) {
+        this.myArmor = myArmor;
+    }
+
     public ArrayList<Potion> getPotions() {
         return potions;
     }
 
     public void setPotions(ArrayList<Potion> potions) {
         this.potions = potions;
+    }
+
+    public ArrayList<Spell> getSpells() {
+        return spells;
+    }
+
+    public void setSpells(ArrayList<Spell> spells) {
+        this.spells = spells;
     }
 
     // Function that changes the stats of the Hero when he has enough xp to level up
@@ -202,47 +229,19 @@ public class Hero extends Living {
     }
 
     // Function to give Hero extra defense if armor is equipped
-    public void equipArmor(Armor armor) {
-        this.setArmorDefense(armor.getDefense());
+    public void equipArmor(int index) {
+        this.setArmorDefense(this.getArmors().get(index).getDefense());
+        this.getArmors().get(index).setEquipped(true);
+        getMyArmor().setEquipped(false);
+        setMyArmor(this.getArmors().get(index));
     }
 
     // Function to give Hero extra attack/strength if weapon is equipped
-    public void equipWeapon(Weapon weapon) {
-        this.setWeaponDamage(weapon.getAttack());
-    }
-
-    // Function to raise the value of a stat based on the potion kind that the Hero used
-    public void usePotion(Potion potion) {
-        PotionKind potionKind = potion.getPotionKind();
-        switch (potionKind) {
-            case STRENGTH:
-                this.setStrength(this.getStrength() + potion.getGain());
-            case DEXTERITY:
-                this.setDexterity(this.getDexterity() + potion.getGain());
-            case AGILITY:
-                this.setAgility(this.getAgility() + potion.getGain());
-        }
-
-    }
-
-    public int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
-
-    // Function to Trigger what should be done when a spell is used. This function should not be under this class...
-    public void castSpell(Spell spell) {
-        if (this.magicPower < spell.getMagicPower()) {
-            // Don't let Hero cast the Spell
-        }
-        // Do the basics for all the spells
-        this.magicPower -= spell.getMagicPower();
-        //   roundAttack = getRandomNumber(spellMinAttack, spellMaxAttack);
-        SpellKind spellKind = spell.getSpellKind();
-        switch (spellKind) {
-            case ICESPELL:      // reduces damage range of the opponent
-            case FIRESPELL:     // reduces defense of the opponent
-            case LIGHTINGSPELL: // reduces the chance of the opponent to dodge an attack
-        }
+    public void equipWeapon(int index) {
+        this.setWeaponDamage(this.getWeapons().get(index).getAttack());
+        this.getWeapons().get(index).setEquipped(true);
+        getMyWeapon().setEquipped(false);
+        setMyWeapon(this.getWeapons().get(index));
     }
 
     public static void main(String[] args) {

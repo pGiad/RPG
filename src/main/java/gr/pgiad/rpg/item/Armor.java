@@ -1,7 +1,8 @@
 package main.java.gr.pgiad.rpg.item;
 
 public class Armor extends Item {
-    private int defense;
+    private final int defense;
+    private boolean equipped = false;
 
     // Constructor
     public Armor(String name, int minLevel, int defense) {
@@ -18,8 +19,12 @@ public class Armor extends Item {
         return defense;
     }
 
-    public void setDefense(int defense) {
-        this.defense = defense;
+    public boolean isEquipped() {
+        return equipped;
+    }
+
+    public void setEquipped(boolean equipped) {
+        this.equipped = equipped;
     }
 
     public static void main(String[] args) {

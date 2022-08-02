@@ -1,8 +1,9 @@
 package main.java.gr.pgiad.rpg.item;
 
 public class Weapon extends Item {
-    private int attack;
-    private boolean twoHands;
+    private final int attack;
+    private final boolean twoHands;
+    private boolean equipped = false;
 
     // Constructor
     public Weapon(String name, int minLevel, int attack, boolean twoHands) {
@@ -14,23 +15,22 @@ public class Weapon extends Item {
         System.out.println("Price: " + this.getPrice());
         System.out.println("Minimum Level: " + this.getMinLevel());
         System.out.println("Damage: " + this.getAttack());
-        System.out.println("2 Hands Needed: " + this.getTwoHands());
+        System.out.println("2 Hands Needed: " + this.isTwoHands());
     }
 
     public int getAttack() {
         return attack;
     }
 
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public boolean getTwoHands() {
+    public boolean isTwoHands() {
         return twoHands;
     }
+    public boolean isEquipped() {
+        return equipped;
+    }
 
-    public void setTwoHandsNeeded(boolean twoHands) {
-        this.twoHands = twoHands;
+    public void setEquipped(boolean equipped) {
+        this.equipped = equipped;
     }
 
     public static void main(String[] args) {

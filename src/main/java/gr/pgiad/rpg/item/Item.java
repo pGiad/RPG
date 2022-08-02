@@ -2,7 +2,8 @@ package main.java.gr.pgiad.rpg.item;
 
 public abstract class Item {
     private String name;
-    private int price, minLevel;
+    private int price;
+    private final int minLevel;
 
     // Constructor
     public Item(String name, int price, int minLevel) {
@@ -29,9 +30,5 @@ public abstract class Item {
 
     public int getMinLevel() {
         return minLevel;
-    }
-
-    public void setMinLevel(int minLevel) {
-        this.minLevel = minLevel;
     }
 }
