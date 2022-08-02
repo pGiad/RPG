@@ -1,18 +1,20 @@
 package main.java.gr.pgiad.rpg;
 
 public class Grid {
-    private int x_pos = 2;
-    private int y_pos = 2;
-    private int x_max = 4;
-    private int y_max = 4;
+    private int x_pos = 3;
+    private int y_pos = 3;
+    private int x_max = 6;
+    private int y_max = 6;
     private String lastPosition = " ";
     // N: Non-Accessible, M: Market, " ": common square with 50% chance for battle
     private String[][] map = {
-            {"N", "N", " ", "M", "M"},
-            {"N", "N", " ", " ", " "},
-            {"N", " ", "X", " ", " "},
-            {"N", " ", " ", " ", "M"},
-            {" ", " ", " ", "M", "M"}};
+            {"N", "N", " ", "M", "M", " ", "N"},
+            {"N", "N", " ", " ", " ", "N", " "},
+            {"N", " ", " ", " ", " ", "N", " "},
+            {"N", " ", " ", "X", "M", " ", " "},
+            {" ", " ", " ", "M", "M", "N", " "},
+            {"N", "N", "N", " ", " ", " ", " "},
+            {" ", "M", " ", " ", "N", "N", "N"}};
 
     public String[][] getMap() {
         return map;
@@ -63,20 +65,20 @@ public class Grid {
     }
 
     public void print() {
-        for(int j = 0; j < 5; j++) {
+        for(int j = 0; j < y_max + 1; j++) {
             System.out.print("*");
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < x_max + 1; i++) {
                 System.out.print("---*");
             }
             System.out.println();
             System.out.print("|");
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < x_max + 1; i++) {
                 System.out.print(" " + this.map[j][i] + " |");
             }
             System.out.println();
         }
         System.out.print("*");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < x_max + 1; i++) {
             System.out.print("---*");
         }
         System.out.println();

@@ -89,6 +89,10 @@ public class Game {
                     battle.main(myHero);
                 }
             }
+            else {
+                Market market = new Market();
+                market.main(myHero);
+            }
             System.out.println("EXIT");
         }
     }
