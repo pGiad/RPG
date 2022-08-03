@@ -1,4 +1,5 @@
 package main.java.gr.pgiad.rpg.item;
+
 import main.java.gr.pgiad.rpg.enumeration.PotionKind;
 import main.java.gr.pgiad.rpg.item.Item;
 

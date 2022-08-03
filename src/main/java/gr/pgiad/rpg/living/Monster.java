@@ -13,20 +13,18 @@ public class Monster extends Living {
     public Monster(String name, int level, int healthPower, MonsterKind monsterKind) {
         super(name, level, healthPower);
         this.monsterKind = monsterKind;
-        if (this.monsterKind == MonsterKind.DRAGON) {                // Dragons have better damage range
-            this.defense = 300;
+        if (this.monsterKind == MonsterKind.DRAGON) {               // Dragons have better damage range
+            this.defense = 100 * level;
             this.damageMin = 200;
             this.damageMax = 300;
             this.dodgeChance = 0.2;
-        }
-        else if (this.monsterKind == MonsterKind.EXOSKELETON) {     // Exoskeletons have raised defense
-            this.defense = 500;
+        } else if (this.monsterKind == MonsterKind.EXOSKELETON) {     // Exoskeletons have raised defense
+            this.defense = 150 * level;
             this.damageMin = 100;
             this.damageMax = 250;
             this.dodgeChance = 0.2;
-        }
-        else if (this.monsterKind  == MonsterKind.SPIRIT) {         // Spirits have raised dodge chance
-            this.defense = 300;
+        } else if (this.monsterKind == MonsterKind.SPIRIT) {         // Spirits have raised dodge chance
+            this.defense = 100 * level;
             this.damageMin = 100;
             this.damageMax = 250;
             this.dodgeChance = 0.4;

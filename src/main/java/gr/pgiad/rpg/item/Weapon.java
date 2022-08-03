@@ -19,6 +19,7 @@ public class Weapon extends Item {
     public boolean isTwoHands() {
         return twoHands;
     }
+
     public boolean isEquipped() {
         return equipped;
     }

@@ -20,7 +20,7 @@ public class InitializeWarriorItems {
 
         // Set Warrior's Spells to begin with
         ArrayList<Spell> mySpells = new ArrayList<>();
-        mySpells.add(new Spell("Igni", 150, 1, 50, 100, 150, 0.2, SpellKind.FIRESPELL));
+        mySpells.add(new Spell("Igni", 150, 1, 1.1, 1.2, 150, 0.2, SpellKind.FIRESPELL));
         myHero.setSpells(mySpells);
 
 

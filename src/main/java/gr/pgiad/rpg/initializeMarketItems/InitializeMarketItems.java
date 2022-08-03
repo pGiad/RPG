@@ -27,15 +27,15 @@ public class InitializeMarketItems {
 
         // Set Market's Spells to begin with
         ArrayList<Spell> mySpells = new ArrayList<>();
-        mySpells.add(new Spell("Enhanced Igni", 200, 3, 70, 130, 180, 0.3, SpellKind.FIRESPELL));
-        mySpells.add(new Spell("Superior Igni", 500, 5, 100, 200, 230, 0.4, SpellKind.FIRESPELL));
-        mySpells.add(new Spell("Immortal Igni", 1000, 10, 180, 300, 300, 0.5, SpellKind.FIRESPELL));
-        mySpells.add(new Spell("Enhanced Axii", 200, 3, 70, 130, 180, 0.3, SpellKind.ICESPELL));
-        mySpells.add(new Spell("Superior Axii", 500, 5, 100, 200, 230, 0.4, SpellKind.ICESPELL));
-        mySpells.add(new Spell("Immortal Axii", 1000, 10, 180, 300, 300, 0.5, SpellKind.ICESPELL));
-        mySpells.add(new Spell("Enhanced Quen", 200, 3, 70, 130, 180, 0.3, SpellKind.LIGHTINGSPELL));
-        mySpells.add(new Spell("Superior Quen", 500, 5, 100, 200, 230, 0.4, SpellKind.LIGHTINGSPELL));
-        mySpells.add(new Spell("Immortal Quen", 1000, 10, 180, 300, 300, 0.5, SpellKind.LIGHTINGSPELL));
+        mySpells.add(new Spell("Enhanced Igni", 200, 3, 1.2, 1.3, 180, 0.3, SpellKind.FIRESPELL));
+        mySpells.add(new Spell("Superior Igni", 500, 5, 1.3, 1.5, 230, 0.4, SpellKind.FIRESPELL));
+        mySpells.add(new Spell("Immortal Igni", 1000, 10, 1.8, 2.0, 300, 0.5, SpellKind.FIRESPELL));
+        mySpells.add(new Spell("Enhanced Axii", 200, 3, 1.2, 1.3, 180, 0.3, SpellKind.ICESPELL));
+        mySpells.add(new Spell("Superior Axii", 500, 5, 1.3, 1.5, 230, 0.4, SpellKind.ICESPELL));
+        mySpells.add(new Spell("Immortal Axii", 1000, 10, 1.8, 2.0, 300, 0.5, SpellKind.ICESPELL));
+        mySpells.add(new Spell("Enhanced Quen", 200, 3, 1.2, 1.3, 180, 0.3, SpellKind.LIGHTINGSPELL));
+        mySpells.add(new Spell("Superior Quen", 500, 5, 1.3, 1.5, 230, 0.4, SpellKind.LIGHTINGSPELL));
+        mySpells.add(new Spell("Immortal Quen", 1000, 10, 1.8, 2.0, 300, 0.5, SpellKind.LIGHTINGSPELL));
         market.setMarketSpells(mySpells);
 
 
