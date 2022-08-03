@@ -13,6 +13,7 @@ public class Game {
         HeroKind heroKind;
         Hero myHero;
         Market market = new Market();
+        Inventory inventory = new Inventory();
 
         System.out.println("Choose a Hero: ");
         System.out.println("1. Warrior");
@@ -74,11 +75,9 @@ public class Game {
                         break;
                     } else if (choice == 4 && Move.moveRight(grid)) {
                         break;
-                    }
-                    else if (choice == 5 && grid.getLastPosition().equals("M")) {
+                    } else if (choice == 5 && grid.getLastPosition().equals("M")) {
                         break;
-                    }
-                    else {
+                    } else {
                         System.out.println("Invalid move. Please try again.");
                     }
                 } catch (InputMismatchException e) {
@@ -87,15 +86,32 @@ public class Game {
                 }
             }
 
-            if(grid.getLastPosition().equals(" ")) {
+            if (grid.getLastPosition().equals(" ")) {
                 double chanceToBattle = Math.random();
                 if (chanceToBattle > 0.5) {
                     System.out.println("You go to Battle!");
                     Battle battle = new Battle();
                     battle.main(myHero);
+                } else {
+                    System.out.println("1. Check Inventory");
+                    System.out.println("2. Continue");
+                    while (true) {
+                        try {
+                            int choice = scan.nextInt();
+                            if (choice == 2) break;
+                            else if (choice == 1) {
+                                inventory.mainInventory(myHero);
+                                break;
+                            } else {
+                                System.out.println("Invalid Option. Please try again.");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid Option. Please try again.");
+                            scan.nextLine();
+                        }
+                    }
                 }
-            }
-            else {
+            } else {
                 market.mainMarket(myHero);
             }
             System.out.println("EXIT");

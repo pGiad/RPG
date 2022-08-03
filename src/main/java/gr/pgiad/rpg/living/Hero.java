@@ -2,8 +2,9 @@ package main.java.gr.pgiad.rpg.living;
 
 import main.java.gr.pgiad.rpg.Spell;
 import main.java.gr.pgiad.rpg.enumeration.HeroKind;
-import main.java.gr.pgiad.rpg.enumeration.PotionKind;
-import main.java.gr.pgiad.rpg.enumeration.SpellKind;
+import main.java.gr.pgiad.rpg.initializeHeroItems.InitializePaladinItems;
+import main.java.gr.pgiad.rpg.initializeHeroItems.InitializeSorcererItems;
+import main.java.gr.pgiad.rpg.initializeHeroItems.InitializeWarriorItems;
 import main.java.gr.pgiad.rpg.item.Armor;
 import main.java.gr.pgiad.rpg.item.Potion;
 import main.java.gr.pgiad.rpg.item.Weapon;
@@ -14,6 +15,7 @@ public class Hero extends Living {
     // Defense is the amount of power that we reduce from the opponent's attack
     private int money;
     private int experience;
+    private int levelUpExperience;
     private int defense;
     private int roundAttack;
     private int armorDefense;
@@ -34,24 +36,31 @@ public class Hero extends Living {
     // Constructor
     public Hero(String name, HeroKind heroKind) {
         super(name, 1, 1000);
-        this.heroKind = heroKind;
-        this.money = 200;
-        this.experience = 0;
-        this.defense = 0;
-        this.magicPower = 500;
-        this.currentMP = 500;
+        this.setHeroKind(heroKind);
+        this.setMoney(200);
+        this.setExperience(0);
+        this.setLevelUpExperience(200);
+        this.setDefense(0);
+        this.setMagicPower(500);
+        this.setCurrentMP(500);
         if (heroKind == HeroKind.WARRIOR) {
-            this.strength = 700;
-            this.dexterity = 500;
-            this.agility = 700;
+            this.setStrength(700);
+            this.setDexterity(500);
+            this.setAgility(700);
+            InitializeWarriorItems warriorItems = new InitializeWarriorItems();
+            warriorItems.main(this);
         } else if (heroKind == HeroKind.SORCERER) {
-            this.strength = 500;
-            this.dexterity = 700;
-            this.agility = 700;
+            this.setStrength(500);
+            this.setDexterity(700);
+            this.setAgility(700);
+            InitializeSorcererItems sorcererItems = new InitializeSorcererItems();
+            sorcererItems.main(this);
         } else if (heroKind == HeroKind.PALADIN) {
-            this.strength = 700;
-            this.dexterity = 700;
-            this.agility = 500;
+            this.setStrength(700);
+            this.setDexterity(700);
+            this.setAgility(500);
+            InitializePaladinItems paladinItems = new InitializePaladinItems();
+            paladinItems.main(this);
         }
 
         System.out.println("Constructed a Hero of kind: " + this.heroKind + ", named: " + this.getName());       // Print message
@@ -78,6 +87,14 @@ public class Hero extends Living {
 
     public void setExperience(int experience) {
         this.experience = experience;
+    }
+
+    public int getLevelUpExperience() {
+        return levelUpExperience;
+    }
+
+    public void setLevelUpExperience(int levelUpExperience) {
+        this.levelUpExperience = levelUpExperience;
     }
 
     public int getDefense() {
@@ -212,39 +229,48 @@ public class Hero extends Living {
     public void levelUp() {
         this.setLevel(this.getLevel() + 1);
         this.setHealthPower(this.getHealthPower() * 2);
-        this.magicPower *= 2;
-        if (this.heroKind == HeroKind.WARRIOR) {
-            this.strength += 300;
-            this.dexterity += 200;
-            this.agility += 300;
-        } else if (this.heroKind == HeroKind.SORCERER) {
-            this.strength += 200;
-            this.dexterity += 300;
-            this.agility += 300;
+        this.setLevelUpExperience(this.getLevel() * this.getLevel() * 200);
+        this.setMagicPower(this.getMagicPower() * 2);
+        if (this.getHeroKind() == HeroKind.WARRIOR) {
+            this.setStrength(this.getStrength() + 300);
+            this.setDexterity(this.getDexterity() + 200);
+            this.setAgility(this.getAgility() + 300);
+        } else if (this.getHeroKind() == HeroKind.SORCERER) {
+            this.setStrength(this.getStrength() + 200);
+            this.setDexterity(this.getDexterity() + 300);
+            this.setAgility(this.getAgility() + 300);
         } else {
-            this.strength += 300;
-            this.dexterity += 300;
-            this.agility += 200;
+            this.setStrength(this.getStrength() + 300);
+            this.setDexterity(this.getDexterity() + 300);
+            this.setAgility(this.getAgility() + 200);
         }
     }
 
     // Function to give Hero extra defense if armor is equipped
     public void equipArmor(int index) {
-        this.setArmorDefense(this.getArmors().get(index).getDefense());
-        this.getArmors().get(index).setEquipped(true);
-        getMyArmor().setEquipped(false);
-        setMyArmor(this.getArmors().get(index));
+        if (this.getMyArmor() == null) {
+            this.myArmor = new Armor(this.getArmors().get(index).getName(), this.getArmors().get(index).getMinLevel(),
+                    this.getArmors().get(index).getDefense());
+            this.getArmors().get(index).setEquipped(true);
+        } else {
+            this.setArmorDefense(this.getArmors().get(index).getDefense());
+            this.getArmors().get(index).setEquipped(true);
+            getMyArmor().setEquipped(false);
+            setMyArmor(this.getArmors().get(index));
+        }
     }
 
     // Function to give Hero extra attack/strength if weapon is equipped
     public void equipWeapon(int index) {
-        this.setWeaponDamage(this.getWeapons().get(index).getAttack());
-        this.getWeapons().get(index).setEquipped(true);
-        getMyWeapon().setEquipped(false);
-        setMyWeapon(this.getWeapons().get(index));
-    }
-
-    public static void main(String[] args) {
-        new Hero("Arthur", HeroKind.PALADIN);
+        if (this.getMyWeapon() == null) {
+            this.myWeapon = new Weapon(this.getWeapons().get(index).getName(), this.getWeapons().get(index).getMinLevel(),
+                    this.getWeapons().get(index).getAttack(), this.getWeapons().get(index).isTwoHands());
+            this.getWeapons().get(index).setEquipped(true);
+        } else {
+            this.setWeaponDamage(this.getWeapons().get(index).getAttack());
+            this.getWeapons().get(index).setEquipped(true);
+            getMyWeapon().setEquipped(false);
+            setMyWeapon(this.getWeapons().get(index));
+        }
     }
 }

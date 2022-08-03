@@ -3,16 +3,16 @@ package main.java.gr.pgiad.rpg;
 public class Grid {
     private int x_pos = 3;
     private int y_pos = 3;
-    private int x_max = 6;
-    private int y_max = 6;
+    private final int x_max = 6;
+    private final int y_max = 6;
     private String lastPosition = " ";
     // N: Non-Accessible, M: Market, " ": common square with 50% chance for battle
     private String[][] map = {
-            {"N", "N", " ", "M", "M", " ", "N"},
+            {"N", "N", " ", " ", "M", " ", "N"},
             {"N", "N", " ", " ", " ", "N", " "},
             {"N", " ", " ", " ", " ", "N", " "},
             {"N", " ", " ", "X", "M", " ", " "},
-            {" ", " ", " ", "M", "M", "N", " "},
+            {" ", " ", " ", " ", " ", "N", " "},
             {"N", "N", "N", " ", " ", " ", " "},
             {" ", "M", " ", " ", "N", "N", "N"}};
 
@@ -44,16 +44,8 @@ public class Grid {
         return x_max;
     }
 
-    public void setX_max(int x_max) {
-        this.x_max = x_max;
-    }
-
     public int getY_max() {
         return y_max;
-    }
-
-    public void setY_max(int y_max) {
-        this.y_max = y_max;
     }
 
     public String getLastPosition() {
@@ -65,7 +57,7 @@ public class Grid {
     }
 
     public void print() {
-        for(int j = 0; j < y_max + 1; j++) {
+        for (int j = 0; j < y_max + 1; j++) {
             System.out.print("*");
             for (int i = 0; i < x_max + 1; i++) {
                 System.out.print("---*");

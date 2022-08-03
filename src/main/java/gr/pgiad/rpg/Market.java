@@ -15,6 +15,7 @@ public class Market {
         InitializeMarketItems marketItems = new InitializeMarketItems();
         marketItems.mainMarketInitialize(this);
     }
+
     private ArrayList<Potion> marketPotions;
     private ArrayList<Spell> marketSpells;
     private ArrayList<Weapon> marketWeapons;
@@ -78,8 +79,8 @@ public class Market {
             System.out.println("Market has no available Spells.");
         } else {
             for (int i = 0; i < this.getMarketSpells().size(); i++) {
-                System.out.println((i + 1) + ". " + this.getMarketSpells().get(i).getName() + " (Price: "
-                         + this.getMarketSpells().get(i).getPrice() + ")");
+                System.out.println((i + 1) + ". " + this.getMarketSpells().get(i).name() + " (Price: "
+                        + this.getMarketSpells().get(i).price() + ")");
             }
         }
         System.out.println();
@@ -122,7 +123,7 @@ public class Market {
             System.out.println("You have no Spells.");
         } else {
             for (int i = 0; i < myHero.getSpells().size(); i++) {
-                System.out.println((i + 1) + ". " + myHero.getSpells().get(i).getName());
+                System.out.println((i + 1) + ". " + myHero.getSpells().get(i).name());
             }
         }
         System.out.println();
@@ -189,7 +190,7 @@ public class Market {
                     scan.nextLine();
                 }
             }
-            if(itemChoice == 5) break;
+            if (itemChoice == 5) break;
 
             if (transactionChoice == 1) {           // If User wants to buy from market
                 if (itemChoice == 1) {              // Potion
@@ -211,8 +212,10 @@ public class Market {
                                 if (potionToBuy == (this.getMarketPotions().size() + 1)) break;
                                 if (potionToBuy > 0 && potionToBuy <= this.getMarketPotions().size()) {
                                     if (myHero.getMoney() >= this.getMarketPotions().get(potionToBuy - 1).getPrice()) {
-                                        if (myHero.getLevel() >= this.getMarketPotions().get(potionToBuy - 1).getMinLevel()) {
-                                            myHero.setMoney(myHero.getMoney() - this.getMarketPotions().get(potionToBuy - 1).getPrice());
+                                        if (myHero.getLevel()
+                                                >= this.getMarketPotions().get(potionToBuy - 1).getMinLevel()) {
+                                            myHero.setMoney(myHero.getMoney()
+                                                    - this.getMarketPotions().get(potionToBuy - 1).getPrice());
                                             myHero.getPotions().add(this.marketPotions.get(potionToBuy - 1));
                                             this.getMarketPotions().remove(this.marketPotions.get(potionToBuy - 1));
                                             break;
@@ -237,14 +240,14 @@ public class Market {
                     } else {
                         System.out.println("#   Available Spells to buy: ");
                         for (int i = 0; i < this.getMarketSpells().size(); i++) {
-                            System.out.println((i + 1) + ". " + this.getMarketSpells().get(i).getName()
-                                    + " (Price: " + this.getMarketSpells().get(i).getPrice()
-                                    + ", Minimum Level: " + this.getMarketSpells().get(i).getMinLevel()
-                                    + ", Damage Range: " + this.getMarketSpells().get(i).getDamageMin()
-                                    + "-" + this.getMarketSpells().get(i).getDamageMax()
-                                    + ", Magic Power: " + this.getMarketSpells().get(i).getMagicPower()
-                                    + ", Kind: " + this.getMarketSpells().get(i).getSpellKind()
-                                    + ", Gain Percent: " + this.getMarketSpells().get(i).getSpecialValuePercent() + ")");
+                            System.out.println((i + 1) + ". " + this.getMarketSpells().get(i).name()
+                                    + " (Price: " + this.getMarketSpells().get(i).price()
+                                    + ", Minimum Level: " + this.getMarketSpells().get(i).minLevel()
+                                    + ", Damage Range: " + this.getMarketSpells().get(i).damageMin()
+                                    + "-" + this.getMarketSpells().get(i).damageMax()
+                                    + ", Magic Power: " + this.getMarketSpells().get(i).magicPower()
+                                    + ", Kind: " + this.getMarketSpells().get(i).spellKind()
+                                    + ", Gain Percent: " + this.getMarketSpells().get(i).specialValuePercent() + ")");
                         }
                         System.out.println((this.getMarketSpells().size() + 1) + ". Cancel");
                         while (true) {
@@ -252,9 +255,11 @@ public class Market {
                                 int spellToBuy = scan.nextInt();
                                 if (spellToBuy == (this.getMarketSpells().size() + 1)) break;
                                 if (spellToBuy > 0 && spellToBuy <= this.getMarketSpells().size()) {
-                                    if (myHero.getMoney() >= this.getMarketSpells().get(spellToBuy - 1).getPrice()) {
-                                        if (myHero.getLevel() >= this.getMarketSpells().get(spellToBuy - 1).getMinLevel()) {
-                                            myHero.setMoney(myHero.getMoney() - this.getMarketSpells().get(spellToBuy - 1).getPrice());
+                                    if (myHero.getMoney() >= this.getMarketSpells().get(spellToBuy - 1).price()) {
+                                        if (myHero.getLevel()
+                                                >= this.getMarketSpells().get(spellToBuy - 1).minLevel()) {
+                                            myHero.setMoney(myHero.getMoney()
+                                                    - this.getMarketSpells().get(spellToBuy - 1).price());
                                             myHero.getSpells().add(this.marketSpells.get(spellToBuy - 1));
                                             this.getMarketSpells().remove(this.marketSpells.get(spellToBuy - 1));
                                             break;
@@ -291,8 +296,10 @@ public class Market {
                                 if (weaponToBuy == (this.getMarketWeapons().size() + 1)) break;
                                 if (weaponToBuy > 0 && weaponToBuy <= this.getMarketWeapons().size()) {
                                     if (myHero.getMoney() >= this.getMarketWeapons().get(weaponToBuy - 1).getPrice()) {
-                                        if (myHero.getLevel() >= this.getMarketWeapons().get(weaponToBuy - 1).getMinLevel()) {
-                                            myHero.setMoney(myHero.getMoney() - this.getMarketWeapons().get(weaponToBuy - 1).getPrice());
+                                        if (myHero.getLevel()
+                                                >= this.getMarketWeapons().get(weaponToBuy - 1).getMinLevel()) {
+                                            myHero.setMoney(myHero.getMoney()
+                                                    - this.getMarketWeapons().get(weaponToBuy - 1).getPrice());
                                             myHero.getWeapons().add(this.marketWeapons.get(weaponToBuy - 1));
                                             this.getMarketWeapons().remove(this.marketWeapons.get(weaponToBuy - 1));
                                             break;
@@ -329,8 +336,10 @@ public class Market {
                                 if (armorToBuy == (this.getMarketArmors().size() + 1)) break;
                                 if (armorToBuy > 0 && armorToBuy <= this.getMarketArmors().size()) {
                                     if (myHero.getMoney() >= this.getMarketArmors().get(armorToBuy - 1).getPrice()) {
-                                        if (myHero.getLevel() >= this.getMarketArmors().get(armorToBuy - 1).getMinLevel()) {
-                                            myHero.setMoney(myHero.getMoney() - this.getMarketArmors().get(armorToBuy - 1).getPrice());
+                                        if (myHero.getLevel()
+                                                >= this.getMarketArmors().get(armorToBuy - 1).getMinLevel()) {
+                                            myHero.setMoney(myHero.getMoney()
+                                                    - this.getMarketArmors().get(armorToBuy - 1).getPrice());
                                             myHero.getArmors().add(this.marketArmors.get(armorToBuy - 1));
                                             this.getMarketArmors().remove(this.marketArmors.get(armorToBuy - 1));
                                             break;
@@ -368,7 +377,8 @@ public class Market {
                                 int potionToSell = scan.nextInt();
                                 if (potionToSell == (myHero.getPotions().size() + 1)) break;
                                 if (potionToSell > 0 && potionToSell <= myHero.getPotions().size()) {
-                                    myHero.setMoney(myHero.getMoney() + (myHero.getPotions().get(potionToSell - 1).getPrice() / 2));
+                                    myHero.setMoney(myHero.getMoney()
+                                            + (myHero.getPotions().get(potionToSell - 1).getPrice() / 2));
                                     this.getMarketPotions().add(myHero.getPotions().get(potionToSell - 1));
                                     myHero.getPotions().remove(myHero.getPotions().get(potionToSell - 1));
                                     break;
@@ -381,20 +391,19 @@ public class Market {
                             }
                         }
                     }
-                }
-                else if (itemChoice == 2) {             // Spell
+                } else if (itemChoice == 2) {             // Spell
                     if (myHero.getSpells() == null || myHero.getSpells().isEmpty()) {
                         System.out.println("#   You have no Spells to sell.");
                     } else {
                         System.out.println("#   Available Spells to sell: ");
                         for (int i = 0; i < myHero.getSpells().size(); i++) {
-                            System.out.println((i + 1) + ". " + myHero.getSpells().get(i).getName()
-                                    + " (Price: " + (myHero.getSpells().get(i).getPrice() / 2)
-                                    + ", Damage Range: " + myHero.getSpells().get(i).getDamageMin()
-                                    + "-" + myHero.getSpells().get(i).getDamageMax()
-                                    + ", Magic Power: " + myHero.getSpells().get(i).getMagicPower()
-                                    + ", Kind: " + myHero.getSpells().get(i).getSpellKind()
-                                    + ", Gain Percent: " + myHero.getSpells().get(i).getSpecialValuePercent() + ")");
+                            System.out.println((i + 1) + ". " + myHero.getSpells().get(i).name()
+                                    + " (Price: " + (myHero.getSpells().get(i).price() / 2)
+                                    + ", Damage Range: " + myHero.getSpells().get(i).damageMin()
+                                    + "-" + myHero.getSpells().get(i).damageMax()
+                                    + ", Magic Power: " + myHero.getSpells().get(i).magicPower()
+                                    + ", Kind: " + myHero.getSpells().get(i).spellKind()
+                                    + ", Gain Percent: " + myHero.getSpells().get(i).specialValuePercent() + ")");
                         }
                         System.out.println((myHero.getSpells().size() + 1) + ". Cancel");
                         while (true) {
@@ -402,7 +411,8 @@ public class Market {
                                 int spellToSell = scan.nextInt();
                                 if (spellToSell == (myHero.getSpells().size() + 1)) break;
                                 if (spellToSell > 0 && spellToSell <= myHero.getSpells().size()) {
-                                    myHero.setMoney(myHero.getMoney() + (myHero.getSpells().get(spellToSell - 1).getPrice() / 2));
+                                    myHero.setMoney(myHero.getMoney()
+                                            + (myHero.getSpells().get(spellToSell - 1).price() / 2));
                                     this.getMarketSpells().add(myHero.getSpells().get(spellToSell - 1));
                                     myHero.getSpells().remove(myHero.getSpells().get(spellToSell - 1));
                                     break;
@@ -415,8 +425,7 @@ public class Market {
                             }
                         }
                     }
-                }
-                else if (itemChoice == 3) {             // Weapon
+                } else if (itemChoice == 3) {             // Weapon
                     if (myHero.getWeapons() == null || myHero.getWeapons().isEmpty()) {
                         System.out.println("#   You have no Weapons to sell.");
                     } else {
@@ -432,7 +441,8 @@ public class Market {
                                 int weaponToSell = scan.nextInt();
                                 if (weaponToSell == (myHero.getWeapons().size() + 1)) break;
                                 if (weaponToSell > 0 && weaponToSell <= myHero.getWeapons().size()) {
-                                    myHero.setMoney(myHero.getMoney() + (myHero.getWeapons().get(weaponToSell - 1).getPrice() / 2));
+                                    myHero.setMoney(myHero.getMoney()
+                                            + (myHero.getWeapons().get(weaponToSell - 1).getPrice() / 2));
                                     this.getMarketWeapons().add(myHero.getWeapons().get(weaponToSell - 1));
                                     myHero.getWeapons().remove(myHero.getWeapons().get(weaponToSell - 1));
                                     break;
@@ -445,8 +455,7 @@ public class Market {
                             }
                         }
                     }
-                }
-                else {              // Armor
+                } else {              // Armor
                     if (myHero.getArmors() == null || myHero.getArmors().isEmpty()) {
                         System.out.println("#   You have no Armors to sell.");
                     } else {
@@ -462,7 +471,8 @@ public class Market {
                                 int armorToSell = scan.nextInt();
                                 if (armorToSell == (myHero.getArmors().size() + 1)) break;
                                 if (armorToSell > 0 && armorToSell <= myHero.getArmors().size()) {
-                                    myHero.setMoney(myHero.getMoney() + (myHero.getArmors().get(armorToSell - 1).getPrice() / 2));
+                                    myHero.setMoney(myHero.getMoney()
+                                            + (myHero.getArmors().get(armorToSell - 1).getPrice() / 2));
                                     this.getMarketArmors().add(myHero.getArmors().get(armorToSell - 1));
                                     myHero.getArmors().remove(myHero.getArmors().get(armorToSell - 1));
                                     break;
