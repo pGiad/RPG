@@ -10,12 +10,6 @@ public class Weapon extends Item {
         super(name, 50 * minLevel, minLevel);
         this.attack = attack;
         this.twoHands = twoHands;
-
-        System.out.println("Constructed a Weapon named: " + this.getName());       // Print message
-        System.out.println("Price: " + this.getPrice());
-        System.out.println("Minimum Level: " + this.getMinLevel());
-        System.out.println("Damage: " + this.getAttack());
-        System.out.println("2 Hands Needed: " + this.isTwoHands());
     }
 
     public int getAttack() {
@@ -31,9 +25,5 @@ public class Weapon extends Item {
 
     public void setEquipped(boolean equipped) {
         this.equipped = equipped;
-    }
-
-    public static void main(String[] args) {
-        new Weapon("Blade of Power", 5, 100, true);
     }
 }
