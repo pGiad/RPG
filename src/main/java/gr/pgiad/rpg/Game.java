@@ -12,6 +12,7 @@ public class Game {
         String name;
         HeroKind heroKind;
         Hero myHero;
+        Market market = new Market();
 
         System.out.println("Choose a Hero: ");
         System.out.println("1. Warrior");
@@ -49,7 +50,6 @@ public class Game {
                 System.out.println("Please choose again...");
                 scan.nextLine();
             }
-
         }
 
         System.out.println("Your map is this: (N: Non-accessible, M: Market, X: Your Hero)");
@@ -61,6 +61,8 @@ public class Game {
             System.out.println("2. Down");
             System.out.println("3. Left");
             System.out.println("4. Right");
+            if (grid.getLastPosition().equals("M"))
+                System.out.println("5. Enter Market");
             while (true) {
                 try {
                     int choice = scan.nextInt();
@@ -72,7 +74,11 @@ public class Game {
                         break;
                     } else if (choice == 4 && Move.moveRight(grid)) {
                         break;
-                    } else {
+                    }
+                    else if (choice == 5 && grid.getLastPosition().equals("M")) {
+                        break;
+                    }
+                    else {
                         System.out.println("Invalid move. Please try again.");
                     }
                 } catch (InputMismatchException e) {
@@ -90,8 +96,7 @@ public class Game {
                 }
             }
             else {
-                Market market = new Market();
-                market.main(myHero);
+                market.mainMarket(myHero);
             }
             System.out.println("EXIT");
         }
