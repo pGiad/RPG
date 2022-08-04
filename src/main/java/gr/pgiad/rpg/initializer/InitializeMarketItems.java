@@ -1,4 +1,4 @@
-package main.java.gr.pgiad.rpg.initializeMarketItems;
+package main.java.gr.pgiad.rpg.initializer;
 
 import main.java.gr.pgiad.rpg.Market;
 import main.java.gr.pgiad.rpg.Spell;
@@ -11,7 +11,7 @@ import main.java.gr.pgiad.rpg.item.Weapon;
 import java.util.ArrayList;
 
 public class InitializeMarketItems {
-    public void mainMarketInitialize(Market market) {
+    public static void initializeMarket(Market market) {
         // Set Market's Potions to begin with
         ArrayList<Potion> myPotions = new ArrayList<>();
         myPotions.add(new Potion("Superior Swallow", 100, 2, 70, PotionKind.STRENGTH));

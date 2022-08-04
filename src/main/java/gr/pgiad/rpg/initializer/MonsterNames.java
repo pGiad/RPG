@@ -1,4 +1,4 @@
-package main.java.gr.pgiad.rpg.monsterNames;
+package main.java.gr.pgiad.rpg.initializer;
 
 import main.java.gr.pgiad.rpg.enumeration.MonsterKind;
 import main.java.gr.pgiad.rpg.living.Monster;
@@ -8,9 +8,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class MonsterNames {
-    private final ArrayList<String> monsterNameList = new ArrayList<>();
-    private final Random rand = new Random();
-    public String monsterName(MonsterKind monsterKind) {
+    private final static ArrayList<String> monsterNameList = new ArrayList<>();
+    private final static Random rand = new Random();
+
+    public static String monsterName(MonsterKind monsterKind) {
         if (monsterKind == MonsterKind.DRAGON) {
             monsterNameList.add("Gurvinth");
             monsterNameList.add("Longtail");
@@ -21,8 +22,7 @@ public class MonsterNames {
             monsterNameList.add("Cyga");
             monsterNameList.add("Teperruth");
             monsterNameList.add(" The Deathlord");
-        }
-        else if (monsterKind == MonsterKind.EXOSKELETON) {
+        } else if (monsterKind == MonsterKind.EXOSKELETON) {
             monsterNameList.add("Rib Schneider");
             monsterNameList.add("Aragone");
             monsterNameList.add("Pelvis");
@@ -32,8 +32,7 @@ public class MonsterNames {
             monsterNameList.add("Arhuritis");
             monsterNameList.add("Rotten Exo");
             monsterNameList.add("Bhokdad");
-        }
-        else {
+        } else {
             monsterNameList.add("Aurath");
             monsterNameList.add("Hawnt");
             monsterNameList.add("Wayke");
@@ -44,6 +43,6 @@ public class MonsterNames {
             monsterNameList.add("Psyche");
             monsterNameList.add("Curce");
         }
-        return  monsterNameList.get(rand.nextInt(monsterNameList.size()));
+        return monsterNameList.get(rand.nextInt(monsterNameList.size()));
     }
 }
