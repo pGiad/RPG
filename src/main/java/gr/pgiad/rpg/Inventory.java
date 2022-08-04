@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Inventory {
-    public void mainInventory(Hero myHero) {
+    public void checkInventory(Hero myHero) {
         Scanner scan = new Scanner(System.in);
         System.out.println();
         System.out.println("-----------------------------------------");
@@ -65,6 +65,7 @@ public class Inventory {
 
         outerLoop:
         while (true) {
+            System.out.println();
             System.out.println("#   What are you going to do?");
             System.out.println("1. Equip Weapon");
             System.out.println("2. Equip Armor");
@@ -80,7 +81,8 @@ public class Inventory {
                         System.out.println("Choose your Weapon: ");
                         for (int i = 0; i < myHero.getWeapons().size(); i++) {
                             System.out.println((i + 1) + ". " + myHero.getWeapons().get(i).getName()
-                                    + " (Attack: " + myHero.getWeapons().get(i).getAttack() + ")");
+                                    + " (Attack: " + myHero.getWeapons().get(i).getAttack()
+                                    + (myHero.getWeapons().get(i).isEquipped() ? ", Equipped" : "") + ")");
                         }
                         System.out.println((myHero.getWeapons().size() + 1) + ". Cancel");
                         while (true) {
@@ -88,8 +90,12 @@ public class Inventory {
                                 int weaponChoice = scan.nextInt();
                                 if (weaponChoice == (myHero.getWeapons().size() + 1)) continue outerLoop;
                                 if (weaponChoice > 0 && weaponChoice <= myHero.getWeapons().size()) {
-                                    myHero.equipWeapon(weaponChoice - 1);
-                                    System.out.println("You equipped: " + myHero.getMyWeapon().getName());
+                                    if (myHero.getWeapons().get(weaponChoice - 1).isEquipped()) {
+                                        System.out.println("This Weapon is already equipped.");
+                                    } else {
+                                        myHero.equipWeapon(weaponChoice - 1);
+                                        System.out.println("You equipped: " + myHero.getMyWeapon().getName());
+                                    }
                                     continue outerLoop;
                                 } else {
                                     System.out.println("Invalid Weapon. Please try again.");
@@ -107,7 +113,8 @@ public class Inventory {
                         System.out.println("Choose your Armor: ");
                         for (int i = 0; i < myHero.getArmors().size(); i++) {
                             System.out.println((i + 1) + ". " + myHero.getArmors().get(i).getName()
-                                    + " (Defense: " + myHero.getArmors().get(i).getDefense() + ")");
+                                    + " (Defense: " + myHero.getArmors().get(i).getDefense()
+                                    + (myHero.getArmors().get(i).isEquipped() ? ", Equipped" : "") + ")");
                         }
                         System.out.println((myHero.getArmors().size() + 1) + ". Cancel");
                         while (true) {
@@ -115,8 +122,12 @@ public class Inventory {
                                 int armorChoice = scan.nextInt();
                                 if (armorChoice == (myHero.getArmors().size() + 1)) continue outerLoop;
                                 if (armorChoice > 0 && armorChoice <= myHero.getArmors().size()) {
-                                    myHero.equipArmor((armorChoice - 1));
-                                    System.out.println("You equipped: " + myHero.getMyArmor().getName());
+                                    if (myHero.getArmors().get(armorChoice - 1).isEquipped()) {
+                                        System.out.println("This Armor is already equipped.");
+                                    } else {
+                                        myHero.equipArmor((armorChoice - 1));
+                                        System.out.println("You equipped: " + myHero.getMyArmor().getName());
+                                    }
                                     continue outerLoop;
                                 } else {
                                     System.out.println("Invalid Armor. Please try again.");

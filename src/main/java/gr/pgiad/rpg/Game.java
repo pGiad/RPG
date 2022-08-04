@@ -55,16 +55,18 @@ public class Game {
 
         System.out.println("Your map is this: (N: Non-accessible, M: Market, X: Your Hero)");
         Grid grid = new Grid();
+        mainLoop:
         while (true) {
             grid.print();
-            System.out.println("Please select where you want to go:");
-            System.out.println("1. Up");
-            System.out.println("2. Down");
-            System.out.println("3. Left");
-            System.out.println("4. Right");
-            if (grid.getLastPosition().equals("M"))
-                System.out.println("5. Enter Market");
             while (true) {
+                System.out.println("Please select your move:");
+                System.out.println("1. Up");
+                System.out.println("2. Down");
+                System.out.println("3. Left");
+                System.out.println("4. Right");
+                System.out.println("5. Menu");
+                if (grid.getLastPosition().equals("M"))
+                    System.out.println("6. Enter Market");
                 try {
                     int choice = scan.nextInt();
                     if (choice == 1 && Move.moveUp(grid)) {
@@ -75,7 +77,10 @@ public class Game {
                         break;
                     } else if (choice == 4 && Move.moveRight(grid)) {
                         break;
-                    } else if (choice == 5 && grid.getLastPosition().equals("M")) {
+                    } else if (choice == 5) {
+                        if (Menu.menu(myHero))
+                            break mainLoop;
+                    } else if (choice == 6 && grid.getLastPosition().equals("M")) {
                         break;
                     } else {
                         System.out.println("Invalid move. Please try again.");
@@ -90,8 +95,8 @@ public class Game {
                 double chanceToBattle = Math.random();
                 if (chanceToBattle > 0.5) {
                     System.out.println("You go to Battle!");
-                    Battle battle = new Battle();
-                    battle.main(myHero);
+                    Battle fight = new Battle();
+                    fight.battle(myHero);
                 } else {
                     System.out.println("1. Check Inventory");
                     System.out.println("2. Continue");
@@ -100,7 +105,7 @@ public class Game {
                             int choice = scan.nextInt();
                             if (choice == 2) break;
                             else if (choice == 1) {
-                                inventory.mainInventory(myHero);
+                                inventory.checkInventory(myHero);
                                 break;
                             } else {
                                 System.out.println("Invalid Option. Please try again.");
@@ -112,7 +117,7 @@ public class Game {
                     }
                 }
             } else {
-                market.mainMarket(myHero);
+                market.enterMarket(myHero);
             }
             System.out.println("EXIT");
         }

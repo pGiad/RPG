@@ -2,9 +2,7 @@ package main.java.gr.pgiad.rpg.living;
 
 import main.java.gr.pgiad.rpg.Spell;
 import main.java.gr.pgiad.rpg.enumeration.HeroKind;
-import main.java.gr.pgiad.rpg.initializeHeroItems.InitializePaladinItems;
-import main.java.gr.pgiad.rpg.initializeHeroItems.InitializeSorcererItems;
-import main.java.gr.pgiad.rpg.initializeHeroItems.InitializeWarriorItems;
+import main.java.gr.pgiad.rpg.initializer.InitializeHeroItems;
 import main.java.gr.pgiad.rpg.item.Armor;
 import main.java.gr.pgiad.rpg.item.Potion;
 import main.java.gr.pgiad.rpg.item.Weapon;
@@ -28,8 +26,10 @@ public class Hero extends Living {
     private HeroKind heroKind;
     private ArrayList<Weapon> weapons;
     private Weapon myWeapon;
+    private int myWeaponIndex;
     private ArrayList<Armor> armors;
     private Armor myArmor;
+    private int myArmorIndex;
     private ArrayList<Potion> potions;
     private ArrayList<Spell> spells;
 
@@ -43,24 +43,19 @@ public class Hero extends Living {
         this.setDefense(0);
         this.setMagicPower(500);
         this.setCurrentMP(500);
+        InitializeHeroItems.initializeHero(this);
         if (heroKind == HeroKind.WARRIOR) {
             this.setStrength(700);
             this.setDexterity(500);
             this.setAgility(700);
-            InitializeWarriorItems warriorItems = new InitializeWarriorItems();
-            warriorItems.main(this);
         } else if (heroKind == HeroKind.SORCERER) {
             this.setStrength(500);
             this.setDexterity(700);
             this.setAgility(700);
-            InitializeSorcererItems sorcererItems = new InitializeSorcererItems();
-            sorcererItems.main(this);
         } else if (heroKind == HeroKind.PALADIN) {
             this.setStrength(700);
             this.setDexterity(700);
             this.setAgility(500);
-            InitializePaladinItems paladinItems = new InitializePaladinItems();
-            paladinItems.main(this);
         }
 
         System.out.println("Constructed a Hero of kind: " + this.heroKind + ", named: " + this.getName());       // Print message
@@ -193,6 +188,14 @@ public class Hero extends Living {
         this.myWeapon = myWeapon;
     }
 
+    public int getMyWeaponIndex() {
+        return myWeaponIndex;
+    }
+
+    public void setMyWeaponIndex(int myWeaponIndex) {
+        this.myWeaponIndex = myWeaponIndex;
+    }
+
     public ArrayList<Armor> getArmors() {
         return armors;
     }
@@ -207,6 +210,14 @@ public class Hero extends Living {
 
     public void setMyArmor(Armor myArmor) {
         this.myArmor = myArmor;
+    }
+
+    public int getMyArmorIndex() {
+        return myArmorIndex;
+    }
+
+    public void setMyArmorIndex(int myArmorIndex) {
+        this.myArmorIndex = myArmorIndex;
     }
 
     public ArrayList<Potion> getPotions() {
@@ -256,8 +267,10 @@ public class Hero extends Living {
             this.setArmorDefense(this.getArmors().get(index).getDefense());
             this.getArmors().get(index).setEquipped(true);
             getMyArmor().setEquipped(false);
+            this.getArmors().get(getMyArmorIndex()).setEquipped(false);
             setMyArmor(this.getArmors().get(index));
         }
+        this.setMyArmorIndex(index);
     }
 
     // Function to give Hero extra attack/strength if weapon is equipped
@@ -270,7 +283,9 @@ public class Hero extends Living {
             this.setWeaponDamage(this.getWeapons().get(index).getAttack());
             this.getWeapons().get(index).setEquipped(true);
             getMyWeapon().setEquipped(false);
+            this.getWeapons().get(getMyWeaponIndex()).setEquipped(false);
             setMyWeapon(this.getWeapons().get(index));
         }
+        this.setMyWeaponIndex(index);
     }
 }

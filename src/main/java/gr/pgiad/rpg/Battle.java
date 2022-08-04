@@ -4,7 +4,7 @@ import main.java.gr.pgiad.rpg.enumeration.MonsterKind;
 import main.java.gr.pgiad.rpg.item.Potion;
 import main.java.gr.pgiad.rpg.living.Hero;
 import main.java.gr.pgiad.rpg.living.Monster;
-import main.java.gr.pgiad.rpg.monsterNames.MonsterNames;
+import main.java.gr.pgiad.rpg.initializer.MonsterNames;
 
 import java.util.*;
 
@@ -23,7 +23,11 @@ public class Battle {
         // Set Hero's round attack based on the attack range of the spell and the dexterity of Hero
         spellAttack = getRandomNumber((int) (spell.damageMin() * myHero.getDexterity())
                 , (int) (spell.damageMax() * myHero.getDexterity()));
-        monster.setCurrentHP(monster.getCurrentHP() - spellAttack);
+        if (Math.random() <= monster.getDodgeChance()) {
+            System.out.println(monster.getMonsterKind() + " " + monster.getName() + " dodged your attack!");
+        } else {
+            monster.setCurrentHP(monster.getCurrentHP() - spellAttack);
+        }
         spellCounter = 3;
         switch (spell.spellKind()) {
             case ICESPELL:      // reduces damage range of the opponent
@@ -52,6 +56,7 @@ public class Battle {
 
         outerLoop:
         while (true) {
+            System.out.println();
             System.out.println("Choose your move: ");
             System.out.println("1. Attack");
             System.out.println("2. Cast Spell");
@@ -62,59 +67,85 @@ public class Battle {
                 int choice = scan.nextInt();
                 if (choice == 1) {
                     // Regular attack
-                    myHero.setRoundAttack(spellAttack + myHero.getStrength() + myHero.getWeaponDamage()
-                            - monster.getDefense());
-                    monster.setCurrentHP(monster.getCurrentHP() - myHero.getRoundAttack());
+                    if (Math.random() <= monster.getDodgeChance()) {
+                        System.out.println(monster.getMonsterKind() + " " + monster.getName() + " dodged your attack!");
+                    } else {
+                        myHero.setRoundAttack(spellAttack + myHero.getStrength() + myHero.getWeaponDamage()
+                                - monster.getDefense());
+                        monster.setCurrentHP(monster.getCurrentHP() - myHero.getRoundAttack());
+                    }
                     break;
                 } else if (choice == 2) {
                     // Cast a Spell
                     if (myHero.getSpells() == null || myHero.getSpells().isEmpty()) {
                         System.out.println("You have no Spells in your inventory. Select another move to do.");
                     } else {
-                        System.out.println("Magic Power: " + myHero.getCurrentMP());
-                        System.out.println("Choose your Spell: ");
-                        for (int i = 0; i < myHero.getSpells().size(); i++) {
-                            if (myHero.getCurrentMP() >= myHero.getSpells().get(i).magicPower()) {
-                                System.out.println((i + 1) + ". " + myHero.getSpells().get(i).name()
-                                        + " (Magic Power Required: " + myHero.getSpells().get(i).magicPower()
-                                        + ", Attack Range: " + myHero.getSpells().get(i).damageMin()
-                                        + "-" + myHero.getSpells().get(i).damageMax()
-                                        + ", Kind: " + myHero.getSpells().get(i).spellKind()
-                                        + ", Gain Percent: " + myHero.getSpells().get(i).specialValuePercent() + ")");
+                        while (true) {
+                            System.out.println("Magic Power: " + myHero.getCurrentMP());
+                            System.out.println("Choose your Spell: ");
+                            for (int i = 0; i < myHero.getSpells().size(); i++) {
+                                if (myHero.getCurrentMP() >= myHero.getSpells().get(i).magicPower()) {
+                                    System.out.println((i + 1) + ". " + myHero.getSpells().get(i).name()
+                                            + " (Magic Power Required: " + myHero.getSpells().get(i).magicPower()
+                                            + ", Attack Range: " + myHero.getSpells().get(i).damageMin()
+                                            + "-" + myHero.getSpells().get(i).damageMax()
+                                            + ", Kind: " + myHero.getSpells().get(i).spellKind()
+                                            + ", Gain Percent: " + myHero.getSpells().get(i).specialValuePercent() + ")");
+                                }
+                            }
+                            System.out.println((myHero.getSpells().size() + 1) + ". Cancel");
+                            try {
+                                // Scan user's choice
+                                int spellChoice = scan.nextInt();
+                                if (spellChoice == (myHero.getSpells().size() + 1)) continue outerLoop;
+                                // Call function castSpell with selected spell
+                                castSpell(myHero, monster, myHero.getSpells().get(spellChoice - 1));
+                                break;
+                            } catch (IndexOutOfBoundsException e) {
+                                System.out.println("Not valid Spell. Please choose again.");
+                                System.out.println();
+                            } catch (InputMismatchException e) {
+                                System.out.println("Not valid Spell. Please choose again.");
+                                System.out.println();
+                                scan.nextLine();
                             }
                         }
-                        System.out.println((myHero.getSpells().size() + 1) + ". Cancel");
-                        // Scan user's choice
-                        int spellChoice = scan.nextInt();
-                        if (spellChoice == (myHero.getSpells().size() + 1)) continue;
-                        // Call function castSpell with selected spell
-                        castSpell(myHero, monster, myHero.getSpells().get(spellChoice - 1));
-                        break;
                     }
                 } else if (choice == 3) {
                     // Use a Potion
                     if (myHero.getPotions() == null || myHero.getPotions().isEmpty()) {
                         System.out.println("You have no Potions in your inventory. Select another move to do.");
                     } else {
-                        System.out.println("Choose your Potion: ");
-                        for (int i = 0; i < myHero.getPotions().size(); i++) {
-                            System.out.println((i + 1) + ". " + myHero.getPotions().get(i).getName()
-                                    + "(Kind: " + myHero.getPotions().get(i).getPotionKind()
-                                    + ", Gain: " + myHero.getPotions().get(i).getGain() + ")");
+                        while (true) {
+                            System.out.println("Choose your Potion: ");
+                            for (int i = 0; i < myHero.getPotions().size(); i++) {
+                                System.out.println((i + 1) + ". " + myHero.getPotions().get(i).getName()
+                                        + "(Kind: " + myHero.getPotions().get(i).getPotionKind()
+                                        + ", Gain: " + myHero.getPotions().get(i).getGain() + ")");
+                            }
+                            System.out.println((myHero.getPotions().size() + 1) + ". Cancel");
+                            try {
+                                // Scan user's choice
+                                int potionChoice = scan.nextInt();
+                                if (potionChoice == (myHero.getPotions().size() + 1)) continue outerLoop;
+                                // Call function usePotion with the selected potion
+                                usePotion(myHero, myHero.getPotions().get(potionChoice - 1));
+                                // Create a temporary list with potions
+                                ArrayList<Potion> tempList = myHero.getPotions();
+                                // Remove the selected potion
+                                tempList.remove(potionChoice - 1);
+                                // Replace potion list with the updated one
+                                myHero.setPotions(tempList);
+                                break;
+                            } catch (IndexOutOfBoundsException e) {
+                                System.out.println("Not valid Potion. Please choose again.");
+                                System.out.println();
+                            } catch (InputMismatchException e) {
+                                System.out.println("Not valid Potion. Please choose again.");
+                                System.out.println();
+                                scan.nextLine();
+                            }
                         }
-                        System.out.println((myHero.getPotions().size() + 1) + ". Cancel");
-                        // Scan user's choice
-                        int potionChoice = scan.nextInt();
-                        if (potionChoice == (myHero.getPotions().size() + 1)) continue;
-                        // Call function usePotion with the selected potion
-                        usePotion(myHero, myHero.getPotions().get(potionChoice - 1));
-                        // Create a temporary list with potions
-                        ArrayList<Potion> tempList = myHero.getPotions();
-                        // Remove the selected potion
-                        tempList.remove(potionChoice - 1);
-                        // Replace potion list with the updated one
-                        myHero.setPotions(tempList);
-                        break;
                     }
                 } else if (choice == 4) {
                     // Choose armor and weapons from your inventory
@@ -128,20 +159,31 @@ public class Battle {
                                 for (int i = 0; i < myHero.getWeapons().size(); i++) {
                                     System.out.println((i + 1) + ". " + myHero.getWeapons().get(i).getName()
                                             + " (Attack: " + myHero.getWeapons().get(i).getAttack()
-                                            + ", Equipped: " + myHero.getWeapons().get(i).isEquipped() + ")");
+                                            + (myHero.getWeapons().get(i).isEquipped() ? ", Equipped" : "") + ")");
                                 }
                                 System.out.println((myHero.getWeapons().size() + 1) + ". Skip Weapons and go to Armors");
                                 System.out.println((myHero.getWeapons().size() + 2) + ". Cancel");
-                                int weaponChoice = scan.nextInt();
-                                if (weaponChoice == (myHero.getWeapons().size() + 2))
-                                    continue outerLoop;
-                                if (weaponChoice != (myHero.getWeapons().size() + 1)) {
-                                    if (myHero.getWeapons().get(weaponChoice - 1).isEquipped()) {
-                                        System.out.println("This Weapon is Equipped. Please choose another one.");
-                                        continue;
+                                try {
+                                    int weaponChoice = scan.nextInt();
+                                    if (weaponChoice == (myHero.getWeapons().size() + 2))
+                                        continue outerLoop;
+                                    if (weaponChoice != (myHero.getWeapons().size() + 1)) {
+                                        if (myHero.getWeapons().get(weaponChoice - 1).isEquipped()) {
+                                            System.out.println("This Weapon is Equipped. Please choose another one.");
+                                            continue;
+                                        }
+                                        myHero.equipWeapon(weaponChoice - 1);
+                                        break;
                                     }
-                                    myHero.equipWeapon(weaponChoice - 1);
-                                    break;
+                                } catch (IndexOutOfBoundsException e) {
+                                    System.out.println("Not valid Weapon. Please choose again.");
+                                    System.out.println();
+                                    continue;
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Not valid Weapon. Please try again.");
+                                    System.out.println();
+                                    scan.nextLine();
+                                    continue;
                                 }
                                 break;
                             }
@@ -152,23 +194,35 @@ public class Battle {
                                 for (int i = 0; i < myHero.getArmors().size(); i++) {
                                     System.out.println((i + 1) + ". " + myHero.getArmors().get(i).getName()
                                             + " (Defense: " + myHero.getArmors().get(i).getDefense()
-                                            + ", Equipped: " + myHero.getArmors().get(i).isEquipped() + ")");
+                                            + (myHero.getArmors().get(i).isEquipped() ? ", Equipped" : "") + ")");
                                 }
                                 System.out.println((myHero.getArmors().size() + 1) + ". Skip Armors");
-                                int armorChoice = scan.nextInt();
-                                if (armorChoice != (myHero.getArmors().size() + 1)) {
-                                    if (myHero.getArmors().get(armorChoice - 1).isEquipped()) {
-                                        System.out.println("This Armor is Equipped. Please choose another one.");
-                                        continue;
+                                try {
+                                    int armorChoice = scan.nextInt();
+                                    if (armorChoice != (myHero.getArmors().size() + 1)) {
+                                        if (myHero.getArmors().get(armorChoice - 1).isEquipped()) {
+                                            System.out.println("This Armor is Equipped. Please choose another one.");
+                                            continue;
+                                        }
+                                        myHero.equipArmor(armorChoice - 1);
+                                        break;
                                     }
-                                    myHero.equipArmor(armorChoice - 1);
-                                    break;
+                                    System.out.println();
+                                } catch (IndexOutOfBoundsException e) {
+                                    System.out.println("Not valid Armor. Please try again.");
+                                    System.out.println();
+                                    continue;
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Not valid Armor. Please try again.");
+                                    System.out.println();
+                                    scan.nextLine();
+                                    continue;
                                 }
-                                System.out.println();
-                                break;
+                            } else {
+                                System.out.println("No Armors available.");
                             }
+                            break;
                         }
-                        break;
                     }
                 } else {
                     System.out.println("Invalid move. Please try again.");
@@ -187,16 +241,16 @@ public class Battle {
         return myHero.getCurrentHP();
     }
 
-    public void main(Hero myHero) throws InterruptedException {
+    public void battle(Hero myHero) throws InterruptedException {
+        final int initialHP = myHero.getCurrentHP();
         double threshold = Math.random();
         Monster monster;
-        MonsterNames monsterNames = new MonsterNames();
         if (threshold < 0.33) {
-            monster = new Monster(monsterNames.monsterName(MonsterKind.DRAGON), myHero.getLevel(), myHero.getHealthPower(), MonsterKind.DRAGON);
+            monster = new Monster(MonsterNames.monsterName(MonsterKind.DRAGON), myHero.getLevel(), myHero.getHealthPower(), MonsterKind.DRAGON);
         } else if (threshold < 0.66) {
-            monster = new Monster(monsterNames.monsterName(MonsterKind.EXOSKELETON), myHero.getLevel(), myHero.getHealthPower(), MonsterKind.EXOSKELETON);
+            monster = new Monster(MonsterNames.monsterName(MonsterKind.EXOSKELETON), myHero.getLevel(), myHero.getHealthPower(), MonsterKind.EXOSKELETON);
         } else {
-            monster = new Monster(monsterNames.monsterName(MonsterKind.SPIRIT), myHero.getLevel(), myHero.getHealthPower(), MonsterKind.SPIRIT);
+            monster = new Monster(MonsterNames.monsterName(MonsterKind.SPIRIT), myHero.getLevel(), myHero.getHealthPower(), MonsterKind.SPIRIT);
         }
 
         System.out.println();
@@ -205,7 +259,7 @@ public class Battle {
                 + monster.getName());
         System.out.println("---------------------------------------------------");
         System.out.println();
-        Thread.sleep(1000);
+        Thread.sleep(500);
         System.out.println("#  " + myHero.getName() + "'s Stats: ");
         System.out.println("Level: " + myHero.getLevel());
         System.out.println("XP: " + myHero.getExperience() + "/" + myHero.getLevelUpExperience());
@@ -227,7 +281,7 @@ public class Battle {
             System.out.println("No Armor Equipped");
         System.out.println();
 
-        Thread.sleep(1000);
+        Thread.sleep(500);
         System.out.println("#  " + monster.getName() + "'s Stats: ");
         System.out.println("Level: " + monster.getLevel());
         System.out.println("HP: " + monster.getCurrentHP() + "/" + monster.getHealthPower());
@@ -235,7 +289,7 @@ public class Battle {
         System.out.println("Attack Range: " + monster.getDamageMin() + "-" + monster.getDamageMax());
         System.out.println();
         System.out.println();
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         while (true) {
             if (spellCounter > 0)
@@ -265,7 +319,7 @@ public class Battle {
         // If Hero lost the battle
         if (myHero.getCurrentHP() <= 0) {
             System.out.println("You lost the battle");
-            myHero.setCurrentHP(myHero.getHealthPower() / 2);
+            myHero.setCurrentHP(initialHP / 2);
             myHero.setMoney(myHero.getMoney() / 2);
         }
         // If Hero won the battle

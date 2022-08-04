@@ -1,6 +1,6 @@
 package main.java.gr.pgiad.rpg;
 
-import main.java.gr.pgiad.rpg.initializeMarketItems.InitializeMarketItems;
+import main.java.gr.pgiad.rpg.initializer.InitializeMarketItems;
 import main.java.gr.pgiad.rpg.item.Armor;
 import main.java.gr.pgiad.rpg.item.Potion;
 import main.java.gr.pgiad.rpg.item.Weapon;
@@ -12,8 +12,7 @@ import java.util.Scanner;
 
 public class Market {
     public Market() {
-        InitializeMarketItems marketItems = new InitializeMarketItems();
-        marketItems.mainMarketInitialize(this);
+        InitializeMarketItems.initializeMarket(this);
     }
 
     private ArrayList<Potion> marketPotions;
@@ -53,7 +52,7 @@ public class Market {
         this.marketArmors = marketArmors;
     }
 
-    public void mainMarket(Hero myHero) {
+    public void enterMarket(Hero myHero) {
         Scanner scan = new Scanner(System.in);
         System.out.println();
         System.out.println("--------------------------------------------------");
@@ -433,7 +432,8 @@ public class Market {
                         for (int i = 0; i < myHero.getWeapons().size(); i++) {
                             System.out.println((i + 1) + ". " + myHero.getWeapons().get(i).getName()
                                     + " (Price: " + (myHero.getWeapons().get(i).getPrice() / 2)
-                                    + ", Attack: " + myHero.getWeapons().get(i).getAttack() + ")");
+                                    + ", Attack: " + myHero.getWeapons().get(i).getAttack()
+                                    + (myHero.getWeapons().get(i).isEquipped() ? ", Equipped" : "") + ")");
                         }
                         System.out.println((myHero.getWeapons().size() + 1) + ". Cancel");
                         while (true) {
@@ -445,6 +445,18 @@ public class Market {
                                             + (myHero.getWeapons().get(weaponToSell - 1).getPrice() / 2));
                                     this.getMarketWeapons().add(myHero.getWeapons().get(weaponToSell - 1));
                                     myHero.getWeapons().remove(myHero.getWeapons().get(weaponToSell - 1));
+                                    // Update myWeaponIndex if a weapon prior in the list is sold
+                                    if (myHero.getMyWeaponIndex() > weaponToSell - 1) {
+                                        myHero.setMyWeaponIndex(myHero.getMyWeaponIndex() - 1);
+                                    }
+                                    // If an equipped weapon is sold set the appropriate values
+                                    if (myHero.getMyWeaponIndex() == weaponToSell - 1) {
+                                        myHero.setWeaponDamage(0);
+                                        myHero.setMyWeapon(null);
+                                        // This has no effect because in the equipWeapon function getMyWeapon will be null
+                                        // and the if-statement will run
+                                        myHero.setMyWeaponIndex(-1);
+                                    }
                                     break;
                                 } else {
                                     System.out.println("Invalid weapon. Please try again.");
@@ -463,7 +475,8 @@ public class Market {
                         for (int i = 0; i < myHero.getArmors().size(); i++) {
                             System.out.println((i + 1) + ". " + myHero.getArmors().get(i).getName()
                                     + " (Price: " + (myHero.getArmors().get(i).getPrice() / 2)
-                                    + ", Defense: " + myHero.getArmors().get(i).getDefense() + ")");
+                                    + ", Defense: " + myHero.getArmors().get(i).getDefense()
+                                    + (myHero.getArmors().get(i).isEquipped() ? ", Equipped" : "") + ")");
                         }
                         System.out.println((myHero.getArmors().size() + 1) + ". Cancel");
                         while (true) {
@@ -475,6 +488,18 @@ public class Market {
                                             + (myHero.getArmors().get(armorToSell - 1).getPrice() / 2));
                                     this.getMarketArmors().add(myHero.getArmors().get(armorToSell - 1));
                                     myHero.getArmors().remove(myHero.getArmors().get(armorToSell - 1));
+                                    // Update myArmorIndex if an armor prior in the list is sold
+                                    if (myHero.getMyArmorIndex() > armorToSell - 1) {
+                                        myHero.setMyArmorIndex(myHero.getMyArmorIndex() - 1);
+                                    }
+                                    // If an equipped armor is sold set the appropriate values
+                                    if (myHero.getMyArmorIndex() == armorToSell - 1) {
+                                        myHero.setArmorDefense(0);
+                                        myHero.setMyArmor(null);
+                                        // This has no effect because in the equipArmor function getMyArmor will be null
+                                        // and the if-statement will run
+                                        myHero.setMyArmorIndex(-1);
+                                    }
                                     break;
                                 } else {
                                     System.out.println("Invalid armor. Please try again.");
